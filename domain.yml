@@ -1,0 +1,83 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - book
+  - inform
+  - phone
+  - bot_challenge
+
+
+
+  # - repeat_phone
+
+entities:
+  - name
+  - city
+  - number
+  
+slots:
+  number:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: number
+
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: city
+  
+  name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: name
+
+# forms are used to extract the necessary information from the user
+
+forms:
+  simple_form:
+    required_slots:
+    # form loop will run according to the order of the slots
+      - name
+      - city
+      - number   
+
+responses:
+  utter_greet:
+  - text: "Hey! How can I help you?"
+
+  utter_ask_name:
+  - text: "Please provide your name"
+
+  utter_ask_city:
+  - text: "Please provide your city"
+
+  utter_ask_number:
+  - text: "Please provide your phone number"
+
+  utter_iamabot:  
+  - text: "I am a bot, powered by Rasa."
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_book:
+  - text: "Hello! Sure, I'd be happy to assist you with that. Could you please specify the doctor specialization for appointment?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+
+
+actions:
+  - action_say_data
+  - validate_simple_form
+  # - action_generate_response
